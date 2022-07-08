@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ $# -eq 0 || $# -gt 2 ]]; then
-    echo -e "No parameters.\c"
+    echo "No parameters."
     exit 0
 fi
 
@@ -66,4 +66,4 @@ if [ $# -eq 2 ]; then
     fi
 fi
 
-echo -e "Your Google Drive sharing file direct link is:\nhttps://www.googleapis.com/drive/v3/files/${DOCID}?alt=media&key=${gd_api_key}\c"
+echo -e "Your Google Drive sharing file direct link is:\nhttps://www.googleapis.com/drive/v3/files/${DOCID}?alt=media&key=${gd_api_key}"
