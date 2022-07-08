@@ -66,4 +66,4 @@ if [ $# -eq 2 ]; then
     fi
 fi
 
-echo -e "Your Google Drive file direct link is:\nhttps://www.googleapis.com/drive/v3/files/${DOCID}?alt=media&key=${gd_api_key}"
+echo -e "Your Google Drive sharing file direct link is:\nhttps://www.googleapis.com/drive/v3/files/${DOCID}?alt=media&key=${gd_api_key}\c"
