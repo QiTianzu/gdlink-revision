@@ -1,5 +1,5 @@
 # gdlink-revision
-Google Drive 文件直链获取脚本 gdlink 修改版
+Google Drive 共享文件直链获取脚本 gdlink 修改版
 
 ## 原版 gdlink 下载网址
 https://www.moerats.com/usr/shell/gdlink.sh
