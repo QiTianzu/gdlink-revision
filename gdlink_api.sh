@@ -1,0 +1,69 @@
+#!/bin/bash
+
+if [[ $# -eq 0 || $# -gt 2 ]]; then
+    echo -e "No parameters.\c"
+    exit 0
+fi
+
+gd_file_url="$1"
+gd_file_id_num='24,48'
+gd_api_key=''
+Row="$(grep -n "^gd_api_key=" "$0" | awk -F ":" '{print $1}')"
+DOCID="$(echo "${gd_file_url}" | grep -o '[0-9a-zA-Z\_\-]\{'${gd_file_id_num}'\}')"
+
+if [[ $# -eq 1 && -z ${gd_api_key} ]]; then
+    read -p "Please input your Google Drive API key: " gd_api_key
+    read -p "Do you want to save the Google Drive API key? [Y/N]: " answer
+    case "${answer}" in
+    Y | y)
+        sed -i "${Row}c gd_api_key='${gd_api_key}'" "$0"
+        echo "Saved."
+        ;;
+    N | n)
+        echo "Not saved."
+        ;;
+    *)
+        echo "Error choice."
+        ;;
+    esac
+fi
+
+if [ $# -eq 2 ]; then
+    if [ -z ${gd_api_key} ]; then
+        gd_api_key="$2"
+        read -p "Do you want to save the Google API key? [Y/N]: " answer
+        case "${answer}" in
+        Y | y)
+            sed -i "${Row}c gd_api_key='${gd_api_key}'" "$0"
+            echo "Saved."
+            ;;
+        N | n)
+            echo "Not saved."
+            ;;
+        *)
+            echo "Error choice."
+            ;;
+        esac
+    else
+        echo -e \
+            "Google Drive API key already exists, please select an action to perform.\n1) Use, save and replace.\n2) Use only, don't save.\n3) Don't use."
+        read -p "1/2/3> " answer
+        case "${answer}" in
+        1)
+            echo "Used, saved and replaced."
+            ;;
+        2)
+            sed -i "${Row}c gd_api_key='${gd_api_key}'" "$0"
+            echo "Used only, not saved."
+            ;;
+        3)
+            echo "Not used."
+            ;;
+        *)
+            echo "Error choice."
+            ;;
+        esac
+    fi
+fi
+
+echo -e "Your Google Drive file direct link is:\nhttps://www.googleapis.com/drive/v3/files/${DOCID}?alt=media&key=${gd_api_key}"
